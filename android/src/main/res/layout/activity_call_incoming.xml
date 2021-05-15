@@ -30,27 +30,6 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
             />
-
-            <ImageView
-                android:id="@+id/ivRing1"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:scaleType="fitXY"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/ic_ring"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-            />
-
-            <ImageView
-                android:id="@+id/ivRing2"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_ring"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-            />
         </RelativeLayout>
 
         <TextView
