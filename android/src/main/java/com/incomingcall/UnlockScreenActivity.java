@@ -1,7 +1,9 @@
 package com.incomingcall;
 
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Build;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -38,7 +40,7 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
     static boolean active = false;
     private static Vibrator v = (Vibrator) IncomingCallModule.reactContext.getSystemService(Context.VIBRATOR_SERVICE);
     private long[] pattern = {0, 1000, 800};
-    private static MediaPlayer player = MediaPlayer.create(IncomingCallModule.reactContext, Settings.System.DEFAULT_RINGTONE_URI);
+    private static MediaPlayer player = MediaPlayer.create(IncomingCallModule.reactContext.getApplicationContext(), Settings.System.DEFAULT_RINGTONE_URI);
     private static Activity fa;
 
     @Override
@@ -141,6 +143,19 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
         params.putString("uuid", uuid);
         if (!IncomingCallModule.reactContext.hasCurrentActivity()) {
             params.putBoolean("isHeadless", true);
+        }
+
+        KeyguardManager mKeyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+
+        if (mKeyguardManager.isDeviceLocked()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                mKeyguardManager.requestDismissKeyguard(this, new KeyguardManager.KeyguardDismissCallback() {
+                    @Override
+                    public void onDismissSucceeded() {
+                        super.onDismissSucceeded();
+                    }
+                });
+            }
         }
 
         sendEvent("answerCall", params);
